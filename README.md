@@ -8,6 +8,86 @@
     <a href="https://hellogithub.com/repository/e73a691ffcfa4d0e92a05912fe8c0b46"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=e73a691ffcfa4d0e92a05912fe8c0b46&claim_uid=OCYdts5lPczHag4&theme=small" alt="Featured｜HelloGitHub" /></a>
 </p>
 
+## 镜像制作
+
+- 原项目地址
+  - 官网 https://xiuxian.wenzi.games/
+  - GitHub仓库 https://github.com/setube/vue-xiuxiangame
+- 我汉化和构建docker镜像的仓库
+  - GitHub仓库 https://github.com/Firfr/xiuxiangame
+  - Gitee仓库 https://gitee.com/firfe/xiuxiangame
+
+如果镜像拉取失败，请B站发私信，或提issues，华为云上的镜像仓库默认推送的镜像不是公开的，有可能是我忘记设置公开了。
+
+当前制作镜像版本(或截止更新日期)：2025.09.27
+
+首先感谢原作者的开源。  
+对原项目docker镜像的体积就行了优化，最终镜像小于2.5M。
+
+欢迎关注我B站账号 [秦曱凧](https://space.bilibili.com/17547201) (读作 qín yuē zhēng)  
+
+有需要帮忙部署这个项目的朋友,一杯奶茶,即可程远程帮你部署，需要可联系。  
+微信号 `E-0_0-`  
+闲鱼搜索用户 `明月人间`  
+或者邮箱 `firfe163@163.com`  
+如果这个项目有帮到你。欢迎start。
+
+有其他的项目的汉化需求，欢迎提issue。或其他方式联系通知。
+
+### 镜像
+
+从阿里云或华为云镜像仓库拉取镜像，注意填写镜像标签，镜像仓库中没有`latest`标签
+
+容器内部端口`5150`，可通过设置启动参数的值来指定监听端口。
+
+- AMD64平台镜像
+  ```bash
+  swr.cn-north-4.myhuaweicloud.com/firfe/xiuxiangame:2025.09.27
+  ```
+- ARM64平台镜像
+  ```bash
+  swr.cn-north-4.myhuaweicloud.com/firfe/xiuxiangame:2025.09.27-arm64
+  ```
+
+### docker run 命令部署
+
+```bash
+docker run -d \
+--name xiuxiangame \
+--network bridge \
+--restart always \
+--log-opt max-size=1m \
+--log-opt max-file=1 \
+-p 5150:5150 \
+swr.cn-north-4.myhuaweicloud.com/firfe/xiuxiangame:2025.09.27
+```
+在命令最后追加`-p 端口`自定义端口
+
+### compose 文件部署 👍推荐
+
+```yaml
+#version: '3'
+name: xiuxiangame
+services:
+  xiuxiangame:
+    container_name: xiuxiangame
+    image: swr.cn-north-4.myhuaweicloud.com/firfe/xiuxiangame:2025.09.27
+    network_mode: bridge
+    restart: always
+    logging:
+      options:
+        max-size: 1m
+        max-file: '1'
+    ports:
+      - 5150:5150
+    # 指定端口
+    # command: ["-p", "自定义端口"] 
+```
+
+### 效果截图
+
+![游戏页面](图片/游戏页面.png)
+
 ## 我的文字修仙全靠刷
 
 - 项目框架 [Vue.js](https://cn.vuejs.org)
